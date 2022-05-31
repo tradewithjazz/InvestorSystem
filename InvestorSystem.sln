@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestorManagementSystem", "InvestorManagementSystem\InvestorManagementSystem.csproj", "{65B590D3-8197-48FA-A754-41ED15D259FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvestorSystem", "InvestorSystem\InvestorSystem.csproj", "{65B590D3-8197-48FA-A754-41ED15D259FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestorManagementSystem.Core", "InvestorManagementSystem.Core\InvestorManagementSystem.Core.csproj", "{FE531D76-04DD-4590-880F-FDF61E89827D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvestorSystem.Core", "InvestorSystem.Core\InvestorSystem.Core.csproj", "{FE531D76-04DD-4590-880F-FDF61E89827D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestorManagementSystem.Infrastructure", "InvestorManagementSystem.Infrastructure\InvestorManagementSystem.Infrastructure.csproj", "{C18B19FB-F924-405A-9006-1586344DEFE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvestorSystem.Infrastructure", "InvestorSystem.Infrastructure\InvestorSystem.Infrastructure.csproj", "{C18B19FB-F924-405A-9006-1586344DEFE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

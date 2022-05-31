@@ -14,7 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InvestorManagementSystem.Core\InvestorManagementSystem.Core.csproj" />
+    <ProjectReference Include="..\InvestorSystem.Core\InvestorSystem.Core.csproj" />
   </ItemGroup>
+
+  <!--<ItemGroup>
+    <ProjectReference Include="..\InvestorSystem.Core\InvestorSystem.Core.csproj" />
+  </ItemGroup>-->
 
 </Project>

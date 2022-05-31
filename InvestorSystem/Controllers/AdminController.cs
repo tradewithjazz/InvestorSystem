@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InvestorManagementSystem.Controllers
+namespace InvestorSystem.Controllers
 {
     public class AdminController : Controller
     {

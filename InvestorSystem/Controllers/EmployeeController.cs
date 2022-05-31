@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace InvestorManagementSystem.Controllers
+namespace InvestorSystem.Controllers
 {
-    public class BussinessPartnerController : Controller
+    public class EmployeeController : Controller
     {
         public IActionResult Index()
         {

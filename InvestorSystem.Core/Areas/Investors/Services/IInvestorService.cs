@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using InvestorManagementSystem.Core.Areas.Investors.Model;
+using InvestorSystem.Core.Areas.Investors.Model;
 
-namespace InvestorManagementSystem.Core.Areas.Investors.Services
+namespace InvestorSystem.Core.Areas.Investors.Services
 {
     public interface IInvestorService
     {

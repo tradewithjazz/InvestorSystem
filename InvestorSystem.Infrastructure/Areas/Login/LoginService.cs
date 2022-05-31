@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InvestorManagementSystem.Core.Areas.Login
+namespace InvestorSystem.Infrastructure.Areas.Login
 {
-    public class ILoginService
+    public class LoginService
     {
     }
 }

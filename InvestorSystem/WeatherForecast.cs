@@ -1,4 +1,4 @@
-namespace InvestorManagementSystem
+namespace InvestorSystem
 {
     public class WeatherForecast
     {

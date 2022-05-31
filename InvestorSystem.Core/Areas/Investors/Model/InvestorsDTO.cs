@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InvestorManagementSystem.Core.Areas.Investors.Model
+namespace InvestorSystem.Core.Areas.Investors.Model
 {
     public class InvestorsDTO
     {

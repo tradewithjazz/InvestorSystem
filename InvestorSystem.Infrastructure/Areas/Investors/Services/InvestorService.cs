@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using InvestorManagementSystem.Core.Areas.Investors.Model;
-using InvestorManagementSystem.Core.Areas.Investors.Services;
+using InvestorSystem.Core.Areas.Investors.Model;
+using InvestorSystem.Core.Areas.Investors.Services;
 
-namespace InvestorManagementSystem.Infrastructure.Areas.Investors.Services
+namespace InvestorSystem.Infrastructure.Areas.Investors.Services
 {
     public class InvestorService : IInvestorService
     {

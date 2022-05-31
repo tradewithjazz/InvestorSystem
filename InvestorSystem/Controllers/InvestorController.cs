@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using InvestorManagementSystem.Core.Areas.Investors.Model;
-using InvestorManagementSystem.Core.Areas.Investors.Services;
+using InvestorSystem.Core.Areas.Investors.Model;
+using InvestorSystem.Core.Areas.Investors.Services;
 using System.Net.Mime;
 
-namespace InvestorManagementSystem.Controllers
+namespace InvestorSystem.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
