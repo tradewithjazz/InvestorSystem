@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Services\" />
+    <Folder Include="Areas\BranchManagers\Services\" />
+    <Folder Include="Areas\BussinessPartners\Services\" />
+    <Folder Include="Areas\Employee\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InvestorManagementSystem.Core\InvestorManagementSystem.Core.csproj" />
+  </ItemGroup>
+
+</Project>
