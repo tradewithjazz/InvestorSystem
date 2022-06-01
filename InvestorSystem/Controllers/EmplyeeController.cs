@@ -5,7 +5,7 @@ namespace InvestorSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BranchManagerController : ControllerBase
+    public class EmplyeeController : ControllerBase
     {
     }
 }
