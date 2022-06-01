@@ -7,5 +7,6 @@ namespace InvestorSystem.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
+        //hh
     }
 }
