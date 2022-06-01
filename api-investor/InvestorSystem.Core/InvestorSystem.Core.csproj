@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Model\" />
+    <Folder Include="Areas\Admin\Services\" />
+    <Folder Include="Areas\BranchManagers\Model\" />
+    <Folder Include="Areas\BranchManagers\Services\" />
+    <Folder Include="Areas\BussinessPartner\Model\" />
+    <Folder Include="Areas\BussinessPartner\Services\" />
+    <Folder Include="Areas\Common\" />
+    <Folder Include="Areas\Employee\Model\" />
+    <Folder Include="Areas\Employee\Services\" />
+  </ItemGroup>
+
+</Project>
