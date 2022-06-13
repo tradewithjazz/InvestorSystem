@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvestorSystem.Core", "Inve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvestorSystem.Infrastructure", "InvestorSystem.Infrastructure\InvestorSystem.Infrastructure.csproj", "{C18B19FB-F924-405A-9006-1586344DEFE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvestorSystem.DataModel", "InvesterSystem.DataModel\InvestorSystem.DataModel.csproj", "{7690EDF2-5808-40AE-A8F6-8AFCE82923D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C18B19FB-F924-405A-9006-1586344DEFE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C18B19FB-F924-405A-9006-1586344DEFE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C18B19FB-F924-405A-9006-1586344DEFE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7690EDF2-5808-40AE-A8F6-8AFCE82923D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7690EDF2-5808-40AE-A8F6-8AFCE82923D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7690EDF2-5808-40AE-A8F6-8AFCE82923D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7690EDF2-5808-40AE-A8F6-8AFCE82923D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
