@@ -17,6 +17,7 @@ IConfigurationRoot configuration = new ConfigurationBuilder()
 builder.Services.AddEntityFrameworkNpgsql().AddDbContext<AppDBContext>(opt =>
         opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<AppDBContext>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
