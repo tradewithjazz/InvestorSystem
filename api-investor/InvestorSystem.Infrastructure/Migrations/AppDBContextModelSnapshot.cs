@@ -39,6 +39,37 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.HasKey("GenderCD");
 
                     b.ToTable("Genders");
+
+                    b.HasData(
+                        new
+                        {
+                            GenderCD = "M",
+                            Description = "Male",
+                            GenderName = "Male"
+                        },
+                        new
+                        {
+                            GenderCD = "F",
+                            Description = "Female",
+                            GenderName = "Female"
+                        });
+                });
+
+            modelBuilder.Entity("InvestorSystem.DataModel.Table.TransactionType", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("TransactionType");
                 });
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.WeatherForecast", b =>

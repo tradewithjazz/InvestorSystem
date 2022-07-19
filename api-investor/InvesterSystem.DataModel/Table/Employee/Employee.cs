@@ -1,0 +1,15 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace InvestorSystem.DataModel.Table
+{
+    public class Employee
+    {
+        [Key]
+        public int ID { get; set; }
+        public int personID { get; set; }
+        public int bankDetailsID { get; set; }
+        public int nomineeID { get; set; }
+    }
+}
+

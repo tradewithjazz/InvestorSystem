@@ -16,6 +16,7 @@ namespace InvestorSystem.Infrastructure.DB
         public DbSet<WeatherForecast> WeatherForecast { get; set; }
 
         public DbSet<Gender> Genders { get; set; }
+        public DbSet<TransactionType> TransactionType { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
