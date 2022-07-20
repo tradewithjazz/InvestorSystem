@@ -8,27 +8,40 @@ using System.Threading.Tasks;
 
 namespace InvestorSystem.Infrastructure.DB
 {
-    public class AppDBContext:DbContext
+    public class AppDBContext : DbContext
     {
-        public AppDBContext(DbContextOptions<AppDBContext> options):base(options)
+        public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
         { }
 
-        public DbSet<WeatherForecast> WeatherForecast { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DbSet<Gender> Genders { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Gender>().HasData(new Gender { 
-              GenderCD = "M",
-              GenderName = "Male",
-              Description = "Male"
+            modelBuilder.Entity<Gender>().HasData(new Gender
+            {
+                GenderCD = "M",
+                GenderName = "Male",
+                Description = "Male"
             },
             new Gender
             {
                 GenderCD = "F",
                 GenderName = "Female",
                 Description = "Female"
+            });
+
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                Id = 1,
+                CreatedDate = DateTime.UtcNow,
+                DisplayName = "Invester System",
+                IsDeleted = false,
+                Password = "InvSys@123",
+                UserEmail = "investor@system.com",
+                UserName = "Invester System"
             });
         }
     }

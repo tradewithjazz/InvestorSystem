@@ -18,4 +18,8 @@
     <Folder Include="Areas\Employee\Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InvesterSystem.DataModel\InvestorSystem.DataModel.csproj" />
+  </ItemGroup>
+
 </Project>
