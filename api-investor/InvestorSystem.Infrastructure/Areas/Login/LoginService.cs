@@ -2,6 +2,7 @@
 using InvestorSystem.DataModel.Table;
 using InvestorSystem.Infrastructure.DB;
 using Microsoft.Extensions.Configuration;
+//using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace InvestorSystem.Infrastructure.Areas.Login
 
         public IList<Gender> GetGenders()
         {
-            return dBContext.Genders.ToList();
+            return dBContext.Gender.ToList();
         }
     }
 }
