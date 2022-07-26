@@ -1,14 +1,20 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using InvestorSystem.DataModel.Table.MetaData;
+
 namespace InvestorSystem.DataModel.Table
 {
     public class BankDetails
     {
-        public int ID { get; set; }
-        public string bankName { get; set; }
-        public string accountNumber { get; set; }
-        public string accountName { get; set; }
-        public string IFSC { get; set; }
-        public int accountTypeID { get; set; }
+        public long ID { get; set; }
+        public string BankName { get; set; } = String.Empty;
+        public string AccountNumber { get; set; } = String.Empty;
+        public string AccountName { get; set; } = String.Empty;
+        public string IFSC { get; set; } = String.Empty;
+
+        [ForeignKey("AccountTypeID")]
+        public short AccountTypeID { get; set; }
+        public virtual AccountType? Accounttype { get; set; }
     }
 }
 

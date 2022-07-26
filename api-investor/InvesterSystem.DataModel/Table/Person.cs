@@ -6,18 +6,19 @@ namespace InvestorSystem.DataModel.Table
     public class Person
     {
         [Key]
-        public int ID { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string addressLine1 { get; set; }
-        public string addressLine2 { get; set; }
-        public DateOnly dob { get; set; }
-        public string email { get; set; }
-        public int districtID { get; set; }
-        public string mobileNo { get; set; }
-        public string alternateMobileNo { get; set; }
-        public int maritalStatusID { get; set; }
-        public int genderID { get; set; }
+        public long ID { get; set; }
+        public string FirstName { get; set; } = String.Empty;
+        public string LastName { get; set; } = String.Empty;
+        public string AddressLine1 { get; set; } = String.Empty;
+        public string AddressLine2 { get; set; } = String.Empty;
+        public DateOnly DOB { get; set; }
+        public string Email { get; set; } = String.Empty;
+
+        public string MobileNo { get; set; } = String.Empty;
+        public string AlternateMobileNo { get; set; } = String.Empty;
+
+        public MaritalStatus? MaritalStatus { get; set; }
+        public short Gender { get; set; }
 
     }
 }

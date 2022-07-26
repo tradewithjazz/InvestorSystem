@@ -1,10 +1,10 @@
 ﻿using System;
-namespace InvestorSystem.DataModel.Table.Investor
+namespace InvestorSystem.DataModel.Table
 {
-    public class Investor_Payment_History
+    public class Employee_Payment_History
     {
         public int ID { get; set; }
-        public int investorID { get; set; }
+        public int employeeID { get; set; }
         public int amount { get; set; }
         public DateOnly paidOn { get; set; }
     }

@@ -3,6 +3,7 @@ using System;
 using InvestorSystem.Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InvestorSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220726135142_InvestorTables4")]
+    partial class InvestorTables4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,6 +106,9 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.Property<long>("NomineeID")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("NomineeID1")
+                        .HasColumnType("integer");
+
                     b.Property<long>("PersonID")
                         .HasColumnType("bigint");
 
@@ -111,7 +116,7 @@ namespace InvestorSystem.Infrastructure.Migrations
 
                     b.HasIndex("BankDetailsID");
 
-                    b.HasIndex("NomineeID");
+                    b.HasIndex("NomineeID1");
 
                     b.HasIndex("PersonID");
 
@@ -318,11 +323,11 @@ namespace InvestorSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.MetaData.Nominee", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<int>("Age")
                         .HasColumnType("integer");
@@ -445,7 +450,7 @@ namespace InvestorSystem.Infrastructure.Migrations
 
                     b.HasOne("InvestorSystem.DataModel.Table.MetaData.Nominee", "Nominee")
                         .WithMany()
-                        .HasForeignKey("NomineeID")
+                        .HasForeignKey("NomineeID1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
