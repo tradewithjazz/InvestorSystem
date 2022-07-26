@@ -33,6 +33,19 @@ namespace InvestorSystem.Infrastructure.DB
         public DbSet<Investor_Payout_Investment> Investor_Payout_Investment { get; set; }
 
 
+        //Employee Tables
+        public DbSet<Employee> Employee { get; set; }
+
+        public DbSet<Employee_Comp_History> Employee_Comp_History { get; set; }
+        public DbSet<Employee_Comp_Intermediate> Employee_Comp_Intermediate { get; set; }
+        public DbSet<Employee_Comp_Investment> Employee_Comp_Investment { get; set; }
+
+        public DbSet<Employee_Payment_History> Employee_Payment_History { get; set; }
+        public DbSet<Employee_Payout_History> Employee_Payout_History { get; set; }
+        public DbSet<Employee_Payout_Intermediate> Employee_Payout_Intermediate { get; set; }
+        public DbSet<Employee_Payout_Investment> Employee_Payout_Investment { get; set; }
+
+
         //MetaDataTables
         public DbSet<AccountType> AccountType { get; set; }
         public DbSet<CredOrDeb> CredOrDeb { get; set; }
