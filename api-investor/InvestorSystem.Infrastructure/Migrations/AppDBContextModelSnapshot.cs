@@ -392,7 +392,6 @@ namespace InvestorSystem.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("ID");
-
                     b.ToTable("Person");
                 });
 
@@ -413,26 +412,51 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.ToTable("TransactionType");
                 });
 
-            modelBuilder.Entity("InvestorSystem.DataModel.Table.WeatherForecast", b =>
+            modelBuilder.Entity("InvestorSystem.DataModel.Table.User", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Summary")
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("TemperatureC")
-                        .HasColumnType("integer");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
-                    b.HasKey("ID");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.ToTable("WeatherForecast");
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2022, 7, 20, 8, 39, 1, 608, DateTimeKind.Utc).AddTicks(3037),
+                            DisplayName = "Invester System",
+                            IsDeleted = false,
+                            Password = "InvSys@123",
+                            UserEmail = "investor@system.com",
+                            UserName = "Invester System"
+                        });
                 });
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.Investor", b =>

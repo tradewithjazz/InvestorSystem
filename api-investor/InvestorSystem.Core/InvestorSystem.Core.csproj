@@ -13,9 +13,12 @@
     <Folder Include="Areas\BranchManagers\Services\" />
     <Folder Include="Areas\BussinessPartner\Model\" />
     <Folder Include="Areas\BussinessPartner\Services\" />
-    <Folder Include="Areas\Common\" />
     <Folder Include="Areas\Employee\Model\" />
     <Folder Include="Areas\Employee\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InvesterSystem.DataModel\InvestorSystem.DataModel.csproj" />
   </ItemGroup>
 
 </Project>

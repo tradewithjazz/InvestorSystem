@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace InvestorSystem.Infrastructure.DB
 {
-    public class AppDBContext:DbContext
+    public class AppDBContext : DbContext
     {
-        public AppDBContext(DbContextOptions<AppDBContext> options):base(options)
+        public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
         { }
 
         //Common Tables
@@ -41,6 +41,8 @@ namespace InvestorSystem.Infrastructure.DB
         public DbSet<Relationship> Relationship { get; set; }
         public DbSet<TransactionType> TransactionType { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,6 +56,17 @@ namespace InvestorSystem.Infrastructure.DB
                 ID = 2,
                 Name = "Female",
                 Description = "Female"
+            });
+
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                Id = 1,
+                CreatedDate = DateTime.UtcNow,
+                DisplayName = "Invester System",
+                IsDeleted = false,
+                Password = "InvSys@123",
+                UserEmail = "investor@system.com",
+                UserName = "Invester System"
             });
         }
     }
