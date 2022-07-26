@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Table\MetaData\" />
+    <None Remove="Table\Investor\" />
+    <None Remove="Table\Investor\Payout\" />
+    <None Remove="Table\Investor\Compounding\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Table\MetaData\" />
+    <Folder Include="Table\InvestorTables\" />
+    <Folder Include="Table\InvestorTables\Payout\" />
+    <Folder Include="Table\InvestorTables\Compounding\" />
+  </ItemGroup>
 </Project>

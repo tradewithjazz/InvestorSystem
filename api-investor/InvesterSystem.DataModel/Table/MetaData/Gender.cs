@@ -11,9 +11,9 @@ namespace InvestorSystem.DataModel.Table
     {
         [Key]
         [MaxLength(1)]
-        public string GenderCD { get; set; }
+        public int ID { get; set; }
 
-        public string GenderName { get; set; }
+        public string Name { get; set; }
 
         public string Description { get; set; }
     }

@@ -11,6 +11,7 @@
     <Folder Include="Areas\BranchManagers\Services\" />
     <Folder Include="Areas\BussinessPartners\Services\" />
     <Folder Include="Areas\Employee\Services\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,4 +39,7 @@
     <ProjectReference Include="..\InvestorSystem.Core\InvestorSystem.Core.csproj" />
   </ItemGroup>-->
 
+  <ItemGroup>
+    <None Remove="Migrations\" />
+  </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@ using System;
 using InvestorSystem.Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InvestorSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220726134948_InvestorTables3")]
+    partial class InvestorTables3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,11 +26,11 @@ namespace InvestorSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.BankDetails", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<string>("IFSC")
                         .IsRequired()
@@ -42,8 +44,8 @@ namespace InvestorSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<short>("accountTypeID")
-                        .HasColumnType("smallint");
+                    b.Property<int>("accountTypeID")
+                        .HasColumnType("integer");
 
                     b.Property<string>("bankName")
                         .IsRequired()
@@ -101,17 +103,23 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.Property<long>("BankDetailsID")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("BankDetailsID1")
+                        .HasColumnType("integer");
+
                     b.Property<long>("NomineeID")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("NomineeID1")
+                        .HasColumnType("integer");
 
                     b.Property<long>("PersonID")
                         .HasColumnType("bigint");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("BankDetailsID");
+                    b.HasIndex("BankDetailsID1");
 
-                    b.HasIndex("NomineeID");
+                    b.HasIndex("NomineeID1");
 
                     b.HasIndex("PersonID");
 
@@ -318,11 +326,11 @@ namespace InvestorSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.MetaData.Nominee", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<int>("Age")
                         .HasColumnType("integer");
@@ -392,6 +400,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("ID");
+
                     b.ToTable("Person");
                 });
 
@@ -412,64 +421,39 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.ToTable("TransactionType");
                 });
 
-            modelBuilder.Entity("InvestorSystem.DataModel.Table.User", b =>
+            modelBuilder.Entity("InvestorSystem.DataModel.Table.WeatherForecast", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
+                    b.Property<string>("Summary")
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
+                    b.Property<int>("TemperatureC")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.HasKey("ID");
 
-                    b.Property<string>("UserEmail")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(2022, 7, 20, 8, 39, 1, 608, DateTimeKind.Utc).AddTicks(3037),
-                            DisplayName = "Invester System",
-                            IsDeleted = false,
-                            Password = "InvSys@123",
-                            UserEmail = "investor@system.com",
-                            UserName = "Invester System"
-                        });
+                    b.ToTable("WeatherForecast");
                 });
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.Investor", b =>
                 {
                     b.HasOne("InvestorSystem.DataModel.Table.BankDetails", "BankDetails")
                         .WithMany()
-                        .HasForeignKey("BankDetailsID")
+                        .HasForeignKey("BankDetailsID1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("InvestorSystem.DataModel.Table.MetaData.Nominee", "Nominee")
                         .WithMany()
-                        .HasForeignKey("NomineeID")
+                        .HasForeignKey("NomineeID1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
