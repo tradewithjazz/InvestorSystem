@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace InvestorSystem.DataModel.Table.MetaData
 {
     public class CredOrDeb
