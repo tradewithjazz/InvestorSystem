@@ -7,7 +7,7 @@ namespace InvestorSystem.DataModel.Table
     {
         [Key]
         public short ID { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = String.Empty;
     }
 }
 
