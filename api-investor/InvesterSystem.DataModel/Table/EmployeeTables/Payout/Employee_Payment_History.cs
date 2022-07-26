@@ -1,12 +1,21 @@
 ﻿using System;
+using InvestorSystem.DataModel.Table.MetaData;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace InvestorSystem.DataModel.Table
 {
     public class Employee_Payment_History
     {
-        public int ID { get; set; }
-        public int employeeID { get; set; }
-        public int amount { get; set; }
-        public DateOnly paidOn { get; set; }
+        public long ID { get; set; }
+        public long Amount { get; set; }
+
+        [ForeignKey("EmployeeID")]
+        public long EmployeeID { get; set; }
+        public Employee Employee { get; set; }
+
+        [ForeignKey("CredOrDebID")]
+        public short CredOrDebID { get; set; }
+        public CredOrDeb? CredOrDeb { get; set; }
     }
 }
 
