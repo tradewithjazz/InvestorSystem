@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InvestorSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20220726134948_InvestorTables3")]
-    partial class InvestorTables3
+    [Migration("20220727154359_PersonDOBChanges")]
+    partial class PersonDOBChanges
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,32 +26,37 @@ namespace InvestorSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.BankDetails", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("ID"));
+
+                    b.Property<string>("AccountName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<short>("AccountTypeID")
+                        .HasColumnType("smallint");
+
+                    b.Property<int?>("AccounttypeID")
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    b.Property<string>("BankName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("IFSC")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("accountName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("accountNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("accountTypeID")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("bankName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("ID");
+
+                    b.HasIndex("AccounttypeID");
 
                     b.ToTable("BankDetails");
                 });
@@ -103,23 +108,17 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.Property<long>("BankDetailsID")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("BankDetailsID1")
-                        .HasColumnType("integer");
-
                     b.Property<long>("NomineeID")
                         .HasColumnType("bigint");
-
-                    b.Property<int>("NomineeID1")
-                        .HasColumnType("integer");
 
                     b.Property<long>("PersonID")
                         .HasColumnType("bigint");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("BankDetailsID1");
+                    b.HasIndex("BankDetailsID");
 
-                    b.HasIndex("NomineeID1");
+                    b.HasIndex("NomineeID");
 
                     b.HasIndex("PersonID");
 
@@ -307,6 +306,40 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.ToTable("Investor_Payout_Investment");
                 });
 
+            modelBuilder.Entity("InvestorSystem.DataModel.Table.MaritalStatus", b =>
+                {
+                    b.Property<short>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<short>("ID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MaritalStatuse");
+                });
+
+            modelBuilder.Entity("InvestorSystem.DataModel.Table.MetaData.AccountType", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("AccountType");
+                });
+
             modelBuilder.Entity("InvestorSystem.DataModel.Table.MetaData.CredOrDeb", b =>
                 {
                     b.Property<short>("ID")
@@ -326,11 +359,11 @@ namespace InvestorSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.MetaData.Nominee", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("ID"));
 
                     b.Property<int>("Age")
                         .HasColumnType("integer");
@@ -343,10 +376,12 @@ namespace InvestorSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("RelationshipID")
-                        .HasColumnType("integer");
+                    b.Property<short>("RelationshipID")
+                        .HasColumnType("smallint");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("RelationshipID");
 
                     b.ToTable("Nominee");
                 });
@@ -359,49 +394,65 @@ namespace InvestorSystem.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("ID"));
 
-                    b.Property<string>("addressLine1")
+                    b.Property<string>("AddressLine1")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("addressLine2")
+                    b.Property<string>("AddressLine2")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("alternateMobileNo")
+                    b.Property<string>("AlternateMobileNo")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("districtID")
-                        .HasColumnType("integer");
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateOnly>("dob")
-                        .HasColumnType("date");
-
-                    b.Property<string>("email")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("firstName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<short>("genderID")
+                    b.Property<short>("Gender")
                         .HasColumnType("smallint");
 
-                    b.Property<string>("lastName")
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<short>("maritalStatusID")
+                    b.Property<short?>("MaritalStatusID")
                         .HasColumnType("smallint");
 
-                    b.Property<string>("mobileNo")
+                    b.Property<string>("MobileNo")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("MaritalStatusID");
+
                     b.ToTable("Person");
+                });
+
+            modelBuilder.Entity("InvestorSystem.DataModel.Table.Relationship", b =>
+                {
+                    b.Property<short>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<short>("ID"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Relationship");
                 });
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.TransactionType", b =>
@@ -421,39 +472,73 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.ToTable("TransactionType");
                 });
 
-            modelBuilder.Entity("InvestorSystem.DataModel.Table.WeatherForecast", b =>
+            modelBuilder.Entity("InvestorSystem.DataModel.Table.User", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Summary")
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("TemperatureC")
-                        .HasColumnType("integer");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
-                    b.HasKey("ID");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.ToTable("WeatherForecast");
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2022, 7, 27, 15, 43, 59, 369, DateTimeKind.Utc).AddTicks(1702),
+                            DisplayName = "Invester System",
+                            IsDeleted = false,
+                            Password = "InvSys@123",
+                            UserEmail = "investor@system.com",
+                            UserName = "Invester System"
+                        });
+                });
+
+            modelBuilder.Entity("InvestorSystem.DataModel.Table.BankDetails", b =>
+                {
+                    b.HasOne("InvestorSystem.DataModel.Table.MetaData.AccountType", "Accounttype")
+                        .WithMany()
+                        .HasForeignKey("AccounttypeID");
+
+                    b.Navigation("Accounttype");
                 });
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.Investor", b =>
                 {
                     b.HasOne("InvestorSystem.DataModel.Table.BankDetails", "BankDetails")
                         .WithMany()
-                        .HasForeignKey("BankDetailsID1")
+                        .HasForeignKey("BankDetailsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("InvestorSystem.DataModel.Table.MetaData.Nominee", "Nominee")
                         .WithMany()
-                        .HasForeignKey("NomineeID1")
+                        .HasForeignKey("NomineeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -563,6 +648,26 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.Navigation("Investor");
                 });
 
+            modelBuilder.Entity("InvestorSystem.DataModel.Table.MetaData.Nominee", b =>
+                {
+                    b.HasOne("InvestorSystem.DataModel.Table.Relationship", "Relationship")
+                        .WithMany()
+                        .HasForeignKey("RelationshipID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Relationship");
+                });
+
+            modelBuilder.Entity("InvestorSystem.DataModel.Table.Person", b =>
+                {
+                    b.HasOne("InvestorSystem.DataModel.Table.MaritalStatus", "MaritalStatus")
+                        .WithMany()
+                        .HasForeignKey("MaritalStatusID");
+
+                    b.Navigation("MaritalStatus");
+                });
+
             modelBuilder.Entity("InvestorSystem.DataModel.Table.Investor", b =>
                 {
                     b.Navigation("Investor_Comp_History");
@@ -577,8 +682,7 @@ namespace InvestorSystem.Infrastructure.Migrations
 
                     b.Navigation("Investor_Payout_Intermediate");
 
-                    b.Navigation("Investor_Payout_Investment")
-                        .IsRequired();
+                    b.Navigation("Investor_Payout_Investment");
                 });
 #pragma warning restore 612, 618
         }

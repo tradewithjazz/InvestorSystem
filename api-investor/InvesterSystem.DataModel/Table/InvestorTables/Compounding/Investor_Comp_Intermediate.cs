@@ -8,8 +8,8 @@ namespace InvestorSystem.DataModel.Table
         public long ID { get; set; }
 
         [ForeignKey("InvestorID")]
-        public long InvestorID { get; set; }
-        public Investor Investor { get; set; }
+        public long? InvestorID { get; set; }
+        public Investor? Investor { get; set; }
 
         public long Amount { get; set; }
         public DateTime AsOfDate { get; set; }

@@ -8,15 +8,17 @@ namespace InvestorSystem.Core.Areas.Common.DTOs
 {
     public class PayoutCalculationsDTO
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
 
-        public long Amount_Main { get; set; }
+        public long PayoutAmount { get; set; }
 
-        public long Amount_Intermediate { get; set; }
+        public long CompoundingAmount { get; set; }
 
-        public long Amount_compounding { get; set; }
+        public long PayoutIntermediate { get; set; }
 
-        public DateTime LastAddedOn { get; set; }
+        public long CompoundingIntermediate { get; set; }
+
+        public DateTime ForDate { get; set; }
 
     }
 }

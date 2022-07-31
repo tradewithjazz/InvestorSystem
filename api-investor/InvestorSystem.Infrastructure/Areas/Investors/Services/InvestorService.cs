@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using InvestorSystem.Core.Areas.Common.DTOs;
 using InvestorSystem.Core.Areas.Investors.Model;
 using InvestorSystem.Core.Areas.Investors.Services;
+using InvestorSystem.DataModel.Table;
+using InvestorSystem.DataModel.Table.MetaData;
 using InvestorSystem.Infrastructure.DB;
+using Microsoft.EntityFrameworkCore;
 
 namespace InvestorSystem.Infrastructure.Areas.Investors.Services
 {
@@ -14,11 +18,13 @@ namespace InvestorSystem.Infrastructure.Areas.Investors.Services
     {
 
         private readonly AppDBContext _dBContext;
-        
+        IMapper _mapper;
+
         #region Constructor
-        public InvestorService(AppDBContext dBContext) 
+        public InvestorService(AppDBContext dBContext, IMapper mapper)
         {
             this._dBContext = dBContext;
+            _mapper = mapper;
         }
 
         #endregion
@@ -30,10 +36,61 @@ namespace InvestorSystem.Infrastructure.Areas.Investors.Services
             throw new NotImplementedException();
         }
 
-        //public async Task<InvestorDTO> AddInvestor(InvestorDTO investorDTO)
-        //{
-        //   return await _dBContext.Investor.Insert(investorDTO);
-        //}
+        public async Task<InvestorDTO> AddInvestorBasicDetails(InvestorDTO investorDTO)
+        {
+            //Insert basic details in Person table
+            Person person =  _mapper.Map<InvestorDTO,Person>(investorDTO);
+            MaritalStatus maritalStatus = _dBContext.MaritalStatuse.Find(investorDTO.MaritalStatusID);
+            Gender gender = _dBContext.Gender.Find(investorDTO.GenderID);
+
+            person.MaritalStatus = maritalStatus;
+            person.Gender = gender;
+            //Insert PersonID in Investor table
+            Investor investor = new Investor(); 
+            investor.Person = person;
+            await _dBContext.Investor.AddAsync(investor);
+            await _dBContext.SaveChangesAsync();
+
+            return investorDTO;
+        }
+
+        public async Task<InvestorDTO> AddInvestorBankDetails(InvestorDTO investorDTO)
+        {
+            Investor investor = new Investor();
+            BankDetails bankDetails = _mapper.Map<BankDetails>(investorDTO.BankDetails);  
+            AccountType accountType = _dBContext.AccountType.Find(investorDTO.BankDetails.AccountTypeID);
+            bankDetails.Accounttype = accountType;
+            await _dBContext.BankDetails.AddAsync(bankDetails);
+            await _dBContext.SaveChangesAsync();
+
+            investor.ID = investorDTO.ID;
+            investor.BankDetailsID = bankDetails.ID;
+            _dBContext.Investor.Attach(investor);
+            _dBContext.Entry(investor).Property(x => x.BankDetailsID).IsModified = true;
+            _dBContext.SaveChangesAsync();
+
+            return investorDTO;
+        }
+
+        public async Task<InvestorDTO> AddInvestorNomineeDetails(InvestorDTO investorDTO)
+        {
+            Investor investor = new Investor();
+            Nominee nominee = _mapper.Map<Nominee>(investorDTO.Nominee);
+            Relationship relationship = _dBContext.Relationship.Find(investorDTO.Nominee.RelationshipID);
+            nominee.Relationship = relationship;
+            await _dBContext.Nominee.AddAsync(nominee);
+            await _dBContext.SaveChangesAsync();
+
+            investor.ID = investorDTO.ID;
+            investor.NomineeID = nominee.ID;
+           
+            _dBContext.Investor.Attach(investor);
+            _dBContext.Entry(investor).Property(x => x.NomineeID).IsModified = true;
+            _dBContext.SaveChangesAsync();
+
+            return investorDTO;
+        }
+
 
         //public async Task<List<UserDisplayList>> GetInvestorList()
         //{
@@ -55,7 +112,7 @@ namespace InvestorSystem.Infrastructure.Areas.Investors.Services
         //}
 
 
-        #endregion
+         #endregion
 
     }
 }

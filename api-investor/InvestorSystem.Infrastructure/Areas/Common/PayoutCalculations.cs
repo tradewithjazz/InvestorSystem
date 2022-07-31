@@ -2,6 +2,7 @@
 using InvestorSystem.Core.Areas.Common;
 using InvestorSystem.Core.Areas.Common.DTOs;
 using InvestorSystem.Core.Areas.Investors.Model;
+using InvestorSystem.DataModel.Table;
 using InvestorSystem.Infrastructure.DB;
 using Newtonsoft.Json;
 using System;
@@ -15,17 +16,14 @@ namespace InvestorSystem.Infrastructure.Areas.Common
     public class PayoutCalculations : IPayoutCalculations
     {
         ICommon _common;
-        IPayoutCalculations _payoutCalculations;
         IMapper _mapper;
         AppDBContext _dBContext;
 
         public PayoutCalculations(ICommon common,
-                                  IPayoutCalculations payoutCalculations,
                                   IMapper mapper,
                                   AppDBContext appDBContext)
         {
             _common = common;
-            _payoutCalculations = payoutCalculations;
             _mapper = mapper;
             _dBContext = appDBContext;
         }
@@ -37,67 +35,93 @@ namespace InvestorSystem.Infrastructure.Areas.Common
         /// </summary>
         /// <param name="investorsDTO"></param>
         /// <returns></returns>
-        public async Task<bool> CalculateNextPayout_New(string payoutDetails,int role)
+        public async Task<bool> CalculateNextPayoutNew(PayoutCalculationsDTO payoutCalculationsDTO, int role)
         {
 
-            //need to check compounding payout too
-            if (payoutDetails == null) throw new ArgumentNullException(payoutDetails); 
-           
-            PayoutCalculationsDTO payoutCalculationsDTO = JsonConvert.DeserializeObject<PayoutCalculationsDTO>(payoutDetails);
-
+           const double DAY = 30.0;
             int interestRate = -1;
 
             switch (role)
             {
-                case 2:  
-                    InvestorPayoutMainDTO investorPayoutMainDTO  = new InvestorPayoutMainDTO();
-                    investorPayoutMainDTO  = _mapper.Map<PayoutCalculationsDTO, InvestorPayoutMainDTO>(payoutCalculationsDTO);
-                    //await _dBContext.Investor_Investment.Insert(investorPayoutMainDTO);
+                case 2:
+                    //Insert payout amount
+                    InvestorPayoutMainDTO investorPayoutMainDTO = new InvestorPayoutMainDTO();
+                    investorPayoutMainDTO.InvestorID = payoutCalculationsDTO.ID;
+                    investorPayoutMainDTO.Amount = payoutCalculationsDTO.PayoutAmount;
+                    investorPayoutMainDTO.LastModified = payoutCalculationsDTO.ForDate;
+                    
+                    Investor_Payout_Investment _PayoutInvestment = _mapper.Map<InvestorPayoutMainDTO, Investor_Payout_Investment>(investorPayoutMainDTO);
+                    _dBContext.Investor_Payout_Investment.AddAsync(_PayoutInvestment);
+                    _dBContext.SaveChangesAsync();
 
-                    long totalAmount = (payoutCalculationsDTO.Amount_Main + payoutCalculationsDTO.Amount_compounding);
+                    InvestorPayoutIntermediateDTO investorPayoutIntermediateDTO = new InvestorPayoutIntermediateDTO();
+                    investorPayoutIntermediateDTO.InvestorID = payoutCalculationsDTO.ID;
+                    investorPayoutIntermediateDTO.ForDate = payoutCalculationsDTO.ForDate;
 
-                    interestRate = _common.GetInterestRateAsPerAmount(investorPayoutMainDTO.Amount_Main, role);
+                    //Insert compouding amount
+                    InvestorCompoundingDTO investorCompoundingDTO = new InvestorCompoundingDTO();
+                    investorCompoundingDTO.InvestorID = payoutCalculationsDTO.ID;
+                    investorCompoundingDTO.Amount = payoutCalculationsDTO.CompoundingAmount;
+                    investorCompoundingDTO.LastModified = payoutCalculationsDTO.ForDate;
 
-                    int investmentAddedDay = investorPayoutMainDTO.LastAddedOn.Day;
-                    int forDays = 30 - investmentAddedDay;
-                    if (payoutCalculationsDTO.Amount_Main > 2500000)
+                    Investor_Comp_Investment _CompoundingInvestment = _mapper.Map<InvestorCompoundingDTO, Investor_Comp_Investment>(investorCompoundingDTO);
+                    _dBContext.Investor_Comp_Investment.AddAsync(_CompoundingInvestment);
+                    _dBContext.SaveChangesAsync();
+
+                    InvestorCompoundingIntermediateDTO compoundingIntermediateDTO = new InvestorCompoundingIntermediateDTO();
+                    compoundingIntermediateDTO.InvestorID = payoutCalculationsDTO.ID;
+                    compoundingIntermediateDTO.AsOfDate = payoutCalculationsDTO.ForDate;
+                    compoundingIntermediateDTO.Amount = payoutCalculationsDTO.CompoundingAmount;
+
+                    long totalAmount = (payoutCalculationsDTO.PayoutAmount + payoutCalculationsDTO.CompoundingAmount);
+
+                    interestRate = _common.GetInterestRateAsPerAmount(investorPayoutMainDTO.Amount, role);
+
+                    int investmentAddedDay = investorPayoutMainDTO.LastModified.Day;
+                    int forDays = Convert.ToInt32(DAY) - investmentAddedDay;
+                    if (payoutCalculationsDTO.PayoutAmount > 2500000)
                     {
                         if (interestRate == 0)  //special case
                         {
                             long amount = 2500000;
-                            long remainingAmount = (investorPayoutMainDTO.Amount_Main - amount);
-                            double calculatedInterestFor25L = ((forDays * 4) / 30);
+                            long remainingAmount = (investorPayoutMainDTO.Amount - amount);
+                            double calculatedInterestFor25L = ((forDays * 4) / DAY);
                             long calculatedAmountFor25L = Convert.ToInt64((amount * calculatedInterestFor25L) / 100);
 
-                            double calculatedInterestForRemaining = ((forDays * 5) / 30);
+                            double calculatedInterestForRemaining = ((forDays * 5) / DAY);
                             long calculatedAmtForRemaining = Convert.ToInt64((remainingAmount * calculatedInterestForRemaining) / 100);
 
                             long nextPayout = calculatedAmountFor25L + calculatedAmtForRemaining;
-                            payoutCalculationsDTO.Amount_Intermediate = nextPayout;
+                            investorPayoutIntermediateDTO.Amount = nextPayout;
                         }
-                    }else if(totalAmount > 2500000)
+                    }
+                    else if (totalAmount > 2500000)
                     {
                         interestRate = 4;
-                        double calculatedInterestForDays = ((forDays * interestRate) / 30);
-                        long nextPayout = Convert.ToInt64((investorPayoutMainDTO.Amount_Main * calculatedInterestForDays) / 100);
-
-                        payoutCalculationsDTO.Amount_Intermediate = nextPayout;
-
+                        double calculatedInterestForDays = ((forDays * interestRate) / DAY);
+                        long nextPayout = Convert.ToInt64((investorPayoutMainDTO.Amount * calculatedInterestForDays) / 100);
+                        investorPayoutIntermediateDTO.Amount = nextPayout;
                     }
                     else
                     {
-                        double calculatedInterestForDays = ((forDays * interestRate) / 30);
-                        long nextPayout = Convert.ToInt64((investorPayoutMainDTO.Amount_Main * calculatedInterestForDays) / 100);
-
-                        payoutCalculationsDTO.Amount_Intermediate = nextPayout;
+                        double calculatedInterestForDays = ((forDays * interestRate) / DAY);
+                        long nextPayout = Convert.ToInt64((investorPayoutMainDTO.Amount * calculatedInterestForDays) / 100);
+                        investorPayoutIntermediateDTO.Amount = nextPayout;
                     }
 
-                    InvestorPayoutIntermediateDTO investorPayoutIntermediateDTO = _mapper.Map<PayoutCalculationsDTO, InvestorPayoutIntermediateDTO>(payoutCalculationsDTO);
-                    //await _dBContext.Investor_Payout_Intermediate.Insert(investorPayoutIntermediateDTO);
+                    //Insert next payout in intermediate table
+                    Investor_Payout_Intermediate payout_Intermediate = _mapper.Map<InvestorPayoutIntermediateDTO, Investor_Payout_Intermediate>(investorPayoutIntermediateDTO);
+                    _dBContext.Investor_Payout_Intermediate.AddAsync(payout_Intermediate);
+                    _dBContext.SaveChangesAsync();
+
+                    //Insert next compounding in intermediate table- In this case original amount
+                    Investor_Comp_Intermediate compounding_Intermediate = _mapper.Map<InvestorCompoundingIntermediateDTO, Investor_Comp_Intermediate>(compoundingIntermediateDTO);
+                    _dBContext.Investor_Comp_Intermediate.AddAsync(compounding_Intermediate);
+                    _dBContext.SaveChangesAsync();
 
                     break;
             }
-           
+
             return true;
 
         }
