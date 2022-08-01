@@ -10,16 +10,16 @@ namespace InvestorSystem.DataModel.Table
         [Key]
         public long ID { get; set; }
 
-        public long PersonID { get; set; }
         [ForeignKey("PersonID")]
+        public long? PersonID { get; set; }
         public virtual Person? Person { get; set; }
 
         [ForeignKey("BankDetailsID")]
-        public long BankDetailsID { get; set; }
+        public long? BankDetailsID { get; set; }
         public BankDetails? BankDetails { get; set; }
 
         [ForeignKey("NomineeID")]
-        public long NomineeID { get; set; }
+        public long? NomineeID { get; set; }
         public Nominee? Nominee { get; set; }
 
         // Compounding Tables

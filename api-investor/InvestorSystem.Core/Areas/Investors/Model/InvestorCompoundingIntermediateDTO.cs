@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace InvestorSystem.Core.Areas.Investors.Model
 {
-    public class InvestorPayoutMainDTO
+    public class InvestorCompoundingIntermediateDTO
     {
-        public long? InvestorID { get; set; }
-
         public Investor? Investor { get; set; }
-        public long Amount { get; set; }        
-        public DateTime LastModified { get; set; }
+        public long InvestorID { get; set; }
+        public long Amount { get; set; }
+        public DateTime AsOfDate { get; set; }
     }
-
 }

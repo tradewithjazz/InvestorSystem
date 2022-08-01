@@ -1,13 +1,19 @@
 using InvestorSystem.Core.Areas.Employee.Services;
-using InvestorSystem.Core.Areas.Login;
 using InvestorSystem.Infrastructure.Areas.Employee.Services;
+using System.Text;
+using AutoMapper;
+using InvestorSystem.Core.Areas.Common;
+using InvestorSystem.Core.Areas.Investors.Services;
+using InvestorSystem.Core.Areas.Login;
+using InvestorSystem.Infrastructure.Areas.Common;
+using InvestorSystem.Infrastructure.Areas.Investors.Services;
 using InvestorSystem.Infrastructure.Areas.Login;
 using InvestorSystem.Infrastructure.DB;
+using InvestorSystem.Mapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +51,16 @@ builder.Services.AddSwaggerGen(c => {
     });
 });
 
+// Auto Mapper Configurations
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
+
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+
 builder.Services.AddMvc();
 IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
@@ -56,6 +72,9 @@ builder.Services.AddEntityFrameworkNpgsql().AddDbContext<AppDBContext>(opt =>
 builder.Services.AddScoped<AppDBContext>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IPayoutCalculations, PayoutCalculations>();
+builder.Services.AddScoped<ICommon, Common>();
+builder.Services.AddScoped<IInvestorService, InvestorService>();
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
