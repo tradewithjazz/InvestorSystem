@@ -111,8 +111,45 @@ namespace InvestorSystem.Infrastructure.Areas.Investors.Services
         //    return investorList;
         //}
 
+        public async Task<InvestorDTO> UpdateInvestorBasicDetails(InvestorDTO investorDTO)
+        {
+            Person person = _mapper.Map<InvestorDTO, Person>(investorDTO);
+            MaritalStatus maritalStatus = _dBContext.MaritalStatuse.Find(investorDTO.MaritalStatusID);
+            Gender gender = _dBContext.Gender.Find(investorDTO.GenderID);
+            person.MaritalStatus = maritalStatus;
+            person.Gender = gender;
+            person.ID = investorDTO.PersonID;
 
-         #endregion
+            _dBContext.Update(person);
+            _dBContext.SaveChanges();
+            return investorDTO;
+        }
+
+        public async Task<InvestorDTO> UpdateInvestorBankDetails(InvestorDTO investorDTO)
+        {
+            BankDetails bankDetails = _mapper.Map<BankDetails>(investorDTO.BankDetails);
+            AccountType accountType = _dBContext.AccountType.Find(investorDTO.BankDetails.AccountTypeID);
+            bankDetails.Accounttype = accountType;
+            bankDetails.ID = investorDTO.BankDetailsID;
+
+            _dBContext.Update(bankDetails);
+            _dBContext.SaveChanges();
+            return investorDTO;
+        }
+
+        public async Task<InvestorDTO> UpdateInvestorNomineeDetails(InvestorDTO investorDTO)
+        {
+            Nominee nominee = _mapper.Map<Nominee>(investorDTO.Nominee);
+            Relationship relationship = _dBContext.Relationship.Find(investorDTO.Nominee.RelationshipID);
+            nominee.Relationship = relationship;
+            nominee.ID = investorDTO.NomineeID;
+
+            _dBContext.Update(nominee);
+            _dBContext.SaveChanges();
+            return investorDTO;
+        }
+
+        #endregion
 
     }
 }

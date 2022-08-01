@@ -26,6 +26,8 @@ namespace InvestorSystem.Mapper
             CreateMap<InvestorCompoundingDTO, Investor_Comp_Investment>();
             CreateMap<InvestorPayoutIntermediateDTO, Investor_Payout_Intermediate>();
             CreateMap<InvestorCompoundingIntermediateDTO, Investor_Comp_Intermediate>();
+            CreateMap<InvestorDTO, BankDetails>();
+            CreateMap<InvestorDTO, Nominee>();
         }
     }
 }
