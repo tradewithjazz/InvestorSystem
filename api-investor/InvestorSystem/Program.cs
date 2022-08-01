@@ -1,3 +1,5 @@
+using InvestorSystem.Core.Areas.Employee.Services;
+using InvestorSystem.Infrastructure.Areas.Employee.Services;
 using System.Text;
 using AutoMapper;
 using InvestorSystem.Core.Areas.Common;
@@ -69,6 +71,7 @@ builder.Services.AddEntityFrameworkNpgsql().AddDbContext<AppDBContext>(opt =>
 
 builder.Services.AddScoped<AppDBContext>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IPayoutCalculations, PayoutCalculations>();
 builder.Services.AddScoped<ICommon, Common>();
 builder.Services.AddScoped<IInvestorService, InvestorService>();
