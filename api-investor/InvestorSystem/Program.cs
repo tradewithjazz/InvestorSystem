@@ -1,4 +1,6 @@
+using InvestorSystem.Core.Areas.Employee.Services;
 using InvestorSystem.Core.Areas.Login;
+using InvestorSystem.Infrastructure.Areas.Employee.Services;
 using InvestorSystem.Infrastructure.Areas.Login;
 using InvestorSystem.Infrastructure.DB;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -53,6 +55,8 @@ builder.Services.AddEntityFrameworkNpgsql().AddDbContext<AppDBContext>(opt =>
 
 builder.Services.AddScoped<AppDBContext>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
