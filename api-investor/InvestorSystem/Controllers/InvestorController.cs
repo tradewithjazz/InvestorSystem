@@ -29,6 +29,7 @@ namespace InvestorSystem.Controllers
 
         #region Actions
 
+        /******************** Investor Insertion Methods ******************/
         /// <summary>
         /// Add Investor basic details
         /// </summary>
@@ -40,7 +41,6 @@ namespace InvestorSystem.Controllers
             var result = await _investorService.AddInvestorBasicDetails(investorsDTO);
             return Ok(result);
         }
-
 
         /// <summary>
         /// Add investor bank details
@@ -86,7 +86,47 @@ namespace InvestorSystem.Controllers
         {
             var result = await investorServices.DisplayInvestments();
             return Ok(result);
-        }      
+        }
+
+        /******************** Investor Updation Methods ******************/
+
+        /// <summary>
+        /// Update Investor basic information
+        /// </summary>
+        /// <param name="investorsDTO"></param>
+        /// <returns></returns>
+        [HttpPost("updateInvestorBasicDetails")]
+        public async Task<ActionResult> UpdateInvestorBasicDetails([FromBody] InvestorDTO investorsDTO)
+        {
+            var result = await _investorService.UpdateInvestorBasicDetails(investorsDTO);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Update investor bank details
+        /// </summary>
+        /// <param name="investorsDTO"></param>
+        /// <returns></returns>
+        [HttpPost("updateInvestorBankDetails")]
+        public async Task<ActionResult> UpdateInvestorBankDetails([FromBody] InvestorDTO investorsDTO)
+        {
+            var result = await _investorService.UpdateInvestorBankDetails(investorsDTO);
+            return Ok(result);
+
+        }
+
+        /// <summary>
+        /// Update Investor nominee details
+        /// </summary>
+        /// <param name="investorsDTO"></param>
+        /// <returns></returns>
+        [HttpPost("updateInvestorNomineeDetails")]
+        public async Task<ActionResult> UpdateInvestorNomineeDetails([FromBody] InvestorDTO investorsDTO)
+        {
+            var result = await _investorService.UpdateInvestorNomineeDetails(investorsDTO);
+            return Ok(result);
+        }
+
 
         /// <summary>
         /// Get all investors
