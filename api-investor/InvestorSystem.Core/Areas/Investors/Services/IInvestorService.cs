@@ -11,7 +11,9 @@ namespace InvestorSystem.Core.Areas.Investors.Services
     public interface IInvestorService
     {
         public Task<InvestorDTO> DisplayInvestments();
-        //public Task<InvestorDTO> AddInvestor(InvestorDTO investorDTO);
+        public Task<InvestorDTO> AddInvestorBasicDetails(InvestorDTO investorDTO);
+        public Task<InvestorDTO> AddInvestorBankDetails(InvestorDTO investorDTO);
+        public Task<InvestorDTO> AddInvestorNomineeDetails(InvestorDTO investorDTO);
         //public Task<List<UserDisplayList>> GetInvestorList();
     }
 }

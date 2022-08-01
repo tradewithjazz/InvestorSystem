@@ -13,8 +13,8 @@ namespace InvestorSystem.DataModel.Table
         public string IFSC { get; set; } = String.Empty;
 
         [ForeignKey("AccountTypeID")]
-        public short AccountTypeID { get; set; }
-        public virtual AccountType? Accounttype { get; set; }
+        public short? AccountTypeID { get; set; }
+        public virtual AccountType Accounttype { get; set; }
     }
 }
 

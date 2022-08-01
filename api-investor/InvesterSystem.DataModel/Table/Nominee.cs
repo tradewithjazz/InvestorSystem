@@ -13,7 +13,7 @@ namespace InvestorSystem.DataModel.Table.MetaData
         public int Age { get; set; }
 
         [ForeignKey("RelationshipID")]
-        public short RelationshipID { get; set; }
+        public short? RelationshipID { get; set; }
         public Relationship? Relationship { get; set; }
     }
 }

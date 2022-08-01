@@ -6,10 +6,23 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace InvestorSystem.Infrastructure.Migrations
 {
-    public partial class InvestorTables2 : Migration
+    public partial class tablestructure : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AccountType",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccountType", x => x.ID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "CredOrDeb",
                 columns: table => new
@@ -27,7 +40,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                 name: "Gender",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", maxLength: 1, nullable: false)
+                    ID = table.Column<short>(type: "short", maxLength: 1, nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false)
@@ -38,26 +51,29 @@ namespace InvestorSystem.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Person",
+                name: "MaritalStatuse",
                 columns: table => new
                 {
-                    ID = table.Column<long>(type: "bigint", nullable: false)
+                    ID = table.Column<short>(type: "smallint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    firstName = table.Column<string>(type: "text", nullable: false),
-                    lastName = table.Column<string>(type: "text", nullable: false),
-                    addressLine1 = table.Column<string>(type: "text", nullable: false),
-                    addressLine2 = table.Column<string>(type: "text", nullable: false),
-                    dob = table.Column<DateOnly>(type: "date", nullable: false),
-                    email = table.Column<string>(type: "text", nullable: false),
-                    districtID = table.Column<int>(type: "integer", nullable: false),
-                    mobileNo = table.Column<string>(type: "text", nullable: false),
-                    alternateMobileNo = table.Column<string>(type: "text", nullable: false),
-                    maritalStatusID = table.Column<short>(type: "smallint", nullable: false),
-                    genderID = table.Column<short>(type: "smallint", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Person", x => x.ID);
+                    table.PrimaryKey("PK_MaritalStatuse", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Relationship",
+                columns: table => new
+                {
+                    ID = table.Column<short>(type: "smallint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Relationship", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,18 +90,93 @@ namespace InvestorSystem.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WeatherForecast",
+                name: "Users",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    TemperatureC = table.Column<int>(type: "integer", nullable: false),
-                    Summary = table.Column<string>(type: "text", nullable: true)
+                    UserName = table.Column<string>(type: "text", nullable: false),
+                    UserEmail = table.Column<string>(type: "text", nullable: false),
+                    DisplayName = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WeatherForecast", x => x.ID);
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BankDetails",
+                columns: table => new
+                {
+                    ID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    BankName = table.Column<string>(type: "text", nullable: false),
+                    AccountNumber = table.Column<string>(type: "text", nullable: false),
+                    AccountName = table.Column<string>(type: "text", nullable: false),
+                    IFSC = table.Column<string>(type: "text", nullable: false),
+                    AccountTypeID = table.Column<short>(type: "smallint", nullable: false),
+                    AccounttypeID = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BankDetails", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_BankDetails_AccountType_AccounttypeID",
+                        column: x => x.AccounttypeID,
+                        principalTable: "AccountType",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Person",
+                columns: table => new
+                {
+                    ID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FirstName = table.Column<string>(type: "text", nullable: false),
+                    LastName = table.Column<string>(type: "text", nullable: false),
+                    AddressLine1 = table.Column<string>(type: "text", nullable: false),
+                    AddressLine2 = table.Column<string>(type: "text", nullable: false),
+                    DOB = table.Column<DateOnly>(type: "date", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    MobileNo = table.Column<string>(type: "text", nullable: false),
+                    AlternateMobileNo = table.Column<string>(type: "text", nullable: false),
+                    MaritalStatusID = table.Column<short>(type: "smallint", nullable: true),
+                    Gender = table.Column<short>(type: "smallint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Person", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Person_MaritalStatuse_MaritalStatusID",
+                        column: x => x.MaritalStatusID,
+                        principalTable: "MaritalStatuse",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Nominee",
+                columns: table => new
+                {
+                    ID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Firstname = table.Column<string>(type: "text", nullable: false),
+                    Lastname = table.Column<string>(type: "text", nullable: false),
+                    Age = table.Column<int>(type: "integer", nullable: false),
+                    RelationshipID = table.Column<short>(type: "smallint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Nominee", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Nominee_Relationship_RelationshipID",
+                        column: x => x.RelationshipID,
+                        principalTable: "Relationship",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,12 +186,24 @@ namespace InvestorSystem.Infrastructure.Migrations
                     ID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PersonID = table.Column<long>(type: "bigint", nullable: false),
-                    BankDetailsID = table.Column<long>(type: "bigint", nullable: false),
-                    NomineeID = table.Column<long>(type: "bigint", nullable: false)
+                    BankDetailsID = table.Column<long>(type: "bigint", nullable: true),
+                    NomineeID = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Investor", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Investor_BankDetails_BankDetailsID",
+                        column: x => x.BankDetailsID,
+                        principalTable: "BankDetails",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Investor_Nominee_NomineeID",
+                        column: x => x.NomineeID,
+                        principalTable: "Nominee",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Investor_Person_PersonID",
                         column: x => x.PersonID,
@@ -278,6 +381,26 @@ namespace InvestorSystem.Infrastructure.Migrations
                     { 2, "Female", "Female" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreatedDate", "DisplayName", "IsDeleted", "Password", "UserEmail", "UserName" },
+                values: new object[] { 1, new DateTime(2022, 7, 26, 19, 10, 48, 631, DateTimeKind.Utc).AddTicks(2900), "Invester System", false, "InvSys@123", "investor@system.com", "Invester System" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BankDetails_AccounttypeID",
+                table: "BankDetails",
+                column: "AccounttypeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Investor_BankDetailsID",
+                table: "Investor",
+                column: "BankDetailsID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Investor_NomineeID",
+                table: "Investor",
+                column: "NomineeID");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Investor_PersonID",
                 table: "Investor",
@@ -333,6 +456,16 @@ namespace InvestorSystem.Infrastructure.Migrations
                 table: "Investor_Payout_Investment",
                 column: "InvestorID",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Nominee_RelationshipID",
+                table: "Nominee",
+                column: "RelationshipID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Person_MaritalStatusID",
+                table: "Person",
+                column: "MaritalStatusID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -365,7 +498,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                 name: "TransactionType");
 
             migrationBuilder.DropTable(
-                name: "WeatherForecast");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "CredOrDeb");
@@ -374,7 +507,22 @@ namespace InvestorSystem.Infrastructure.Migrations
                 name: "Investor");
 
             migrationBuilder.DropTable(
+                name: "BankDetails");
+
+            migrationBuilder.DropTable(
+                name: "Nominee");
+
+            migrationBuilder.DropTable(
                 name: "Person");
+
+            migrationBuilder.DropTable(
+                name: "AccountType");
+
+            migrationBuilder.DropTable(
+                name: "Relationship");
+
+            migrationBuilder.DropTable(
+                name: "MaritalStatuse");
         }
     }
 }

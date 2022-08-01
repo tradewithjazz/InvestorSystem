@@ -9,13 +9,13 @@ namespace InvestorSystem.DataModel.Table
         public long ID { get; set; }
 
         [ForeignKey("InvestorID")]
-        public long InvestorID { get; set; }
+        public long? InvestorID { get; set; }
         public Investor Investor { get; set; }
 
         public long Amount { get; set; }
 
         [ForeignKey("CredOrDebID")]
-        public short CredOrDebID { get; set; }
+        public short? CredOrDebID { get; set; }
         public CredOrDeb? CredOrDeb { get; set; }
 
         public DateOnly Date { get; set; }

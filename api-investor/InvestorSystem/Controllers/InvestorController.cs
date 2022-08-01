@@ -15,56 +15,78 @@ namespace InvestorSystem.Controllers
 
         private readonly IInvestorService _investorService;
         private readonly IPayoutCalculations _payoutCalculations;
-        private readonly ICommon _common;
-
         #endregion
 
         #region Constructor
         public InvestorController(IInvestorService investorService,
-                                  IPayoutCalculations payoutCalculations,
-                                  ICommon common)
+                                  IPayoutCalculations payoutCalculations)
         {
             _investorService = investorService;
             _payoutCalculations = payoutCalculations;
-            _common = common;
         }
 
         #endregion
 
         #region Actions
 
-        [HttpGet("displayinvestments")]
-        public async Task<ActionResult<InvestorDTO>> DisplayInvestments([FromServices] IInvestorService investorServices)
+        /// <summary>
+        /// Add Investor basic details
+        /// </summary>
+        /// <param name="investorsDTO"></param>
+        /// <returns></returns>
+        [HttpPost("addInvestorBasicDetails")]
+        public async Task<ActionResult> AddInvestorBasicDetails([FromBody] InvestorDTO investorsDTO)
         {
-            var result = await investorServices.DisplayInvestments();
+            var result = await _investorService.AddInvestorBasicDetails(investorsDTO);
+            return Ok(result);
+        }
+
+
+        /// <summary>
+        /// Add investor bank details
+        /// </summary>
+        /// <param name="investorsDTO"></param>
+        /// <returns></returns>
+        [HttpPost("addInvestorBankDetails")]
+        public async Task<ActionResult> AddInvestorBankDetails([FromBody] InvestorDTO investorsDTO)
+        {
+            var result = await _investorService.AddInvestorBankDetails(investorsDTO);
+            return Ok(result);
+
+        }
+
+        /// <summary>
+        /// Add investor nominee details
+        /// </summary>
+        /// <param name="investorsDTO"></param>
+        /// <returns></returns>
+        [HttpPost("addInvestorNomineeDetails")]
+        public async Task<ActionResult> AddInvestorNomineeDetails([FromBody] InvestorDTO investorsDTO)
+        {
+            var result = await _investorService.AddInvestorNomineeDetails(investorsDTO);
             return Ok(result);
         }
 
         /// <summary>
         /// Calculate user's next payout- newly added amount
-        /// payoutDetails format should be {investorID,amount_main,lastAddedOn,amount_intermediate,amount_compounding,lastAddedOn}    
         /// </summary>
-        /// <param name="investorServices"></param>
+        /// <param name="payoutCalculationsDTO"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        [HttpPost("calculateNextPayout")]
-        public async Task<ActionResult> CalculateNextPayout([FromBody] string payoutDetails, int role)
+        [HttpPost("calculateNextPayoutNew")]
+        public async Task<ActionResult> CalculateNextPayoutNew([FromBody] PayoutCalculationsDTO payoutCalculationsDTO, int role)
         {
-            var result = await _payoutCalculations.CalculateNextPayout_New(payoutDetails, role);
+            var result = await _payoutCalculations.CalculateNextPayoutNew(payoutCalculationsDTO, role);
             return Ok(result);
         }
 
-        /// <summary>
-        /// Add Investor
-        /// </summary>
-        /// <param name="investorsDTO"></param>
-        /// <returns></returns>
-        //public async Task<ActionResult> AddInvestor([FromBody] InvestorDTO investorsDTO)
-        //{
-        //    var result = await _investorService.AddInvestor(investorsDTO);
-        //    return Ok(result);
 
-        //}
+        [HttpGet("displayinvestments")]
+        public async Task<ActionResult<InvestorDTO>> DisplayInvestments([FromServices] IInvestorService investorServices)
+        {
+            var result = await investorServices.DisplayInvestments();
+            return Ok(result);
+        }      
 
         /// <summary>
         /// Get all investors
@@ -76,7 +98,7 @@ namespace InvestorSystem.Controllers
         //    return Ok(userDisplayList);
         //}
 
-    #endregion
+        #endregion
 
     }
 }

@@ -10,7 +10,7 @@ namespace InvestorSystem.DataModel.Table
         public long Amount { get; set; }
 
         [ForeignKey("InvestorID")]
-        public long InvestorID { get; set; }
+        public long? InvestorID { get; set; }
         public Investor Investor { get; set; }
 
         public DateTime PaidOn { get; set; }
