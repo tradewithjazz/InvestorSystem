@@ -48,9 +48,9 @@ namespace InvestorSystem.Controllers
         /// <param name="investorsDTO"></param>
         /// <returns></returns>
         [HttpPost("addInvestorBankDetails")]
-        public async Task<ActionResult> AddInvestorBankDetails([FromBody] InvestorDTO investorsDTO)
+        public async Task<ActionResult> AddInvestorBankDetails([FromBody] BankDetailsDTO bankDetailsDTO)
         {
-            var result = await _investorService.AddInvestorBankDetails(investorsDTO);
+            var result = await _investorService.AddInvestorBankDetails(bankDetailsDTO);
             return Ok(result);
 
         }
@@ -61,9 +61,9 @@ namespace InvestorSystem.Controllers
         /// <param name="investorsDTO"></param>
         /// <returns></returns>
         [HttpPost("addInvestorNomineeDetails")]
-        public async Task<ActionResult> AddInvestorNomineeDetails([FromBody] InvestorDTO investorsDTO)
+        public async Task<ActionResult> AddInvestorNomineeDetails([FromBody] NomineeDTO nomineeDTO)
         {
-            var result = await _investorService.AddInvestorNomineeDetails(investorsDTO);
+            var result = await _investorService.AddInvestorNomineeDetails(nomineeDTO);
             return Ok(result);
         }
 
@@ -81,11 +81,28 @@ namespace InvestorSystem.Controllers
         }
 
 
+        /******************** Dashboard API ******************/
+        /// <summary>
+        /// Display investor's all investments
+        /// </summary>
+        /// <param name="investorID"></param>
+        /// <returns></returns>
         [HttpGet("displayinvestments")]
-        public async Task<ActionResult<InvestorDTO>> DisplayInvestments([FromServices] IInvestorService investorServices)
+        public ActionResult<InvestorDashboardDTO> DisplayInvestments(long investorID)
         {
-            var result = await investorServices.DisplayInvestments();
+            var result =  _investorService.DisplayInvestments(investorID);
             return Ok(result);
+        }
+
+        /// <summary>
+        /// Get all investors
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("getInvestorList")]
+        public ActionResult<List<UserDisplayList>> GetInvestorList(long investorID)
+        {
+            List<UserDisplayList> userDisplayList = _investorService.GetInvestorList(investorID);
+            return Ok(userDisplayList);
         }
 
         /******************** Investor Updation Methods ******************/
@@ -108,9 +125,9 @@ namespace InvestorSystem.Controllers
         /// <param name="investorsDTO"></param>
         /// <returns></returns>
         [HttpPost("updateInvestorBankDetails")]
-        public async Task<ActionResult> UpdateInvestorBankDetails([FromBody] InvestorDTO investorsDTO)
+        public async Task<ActionResult> UpdateInvestorBankDetails([FromBody] BankDetailsDTO bankDetailsDTO)
         {
-            var result = await _investorService.UpdateInvestorBankDetails(investorsDTO);
+            var result = await _investorService.UpdateInvestorBankDetails(bankDetailsDTO);
             return Ok(result);
 
         }
@@ -121,22 +138,11 @@ namespace InvestorSystem.Controllers
         /// <param name="investorsDTO"></param>
         /// <returns></returns>
         [HttpPost("updateInvestorNomineeDetails")]
-        public async Task<ActionResult> UpdateInvestorNomineeDetails([FromBody] InvestorDTO investorsDTO)
+        public async Task<ActionResult> UpdateInvestorNomineeDetails([FromBody] NomineeDTO nomineeDTO)
         {
-            var result = await _investorService.UpdateInvestorNomineeDetails(investorsDTO);
+            var result = await _investorService.UpdateInvestorNomineeDetails(nomineeDTO);
             return Ok(result);
         }
-
-
-        /// <summary>
-        /// Get all investors
-        /// </summary>
-        /// <returns></returns>
-        //public async Task<ActionResult<List<UserDisplayList>>> GetInvestorList()
-        //{
-        //    List<UserDisplayList> userDisplayList = await _common.GetInvestorList();
-        //    return Ok(userDisplayList);
-        //}
 
         #endregion
 

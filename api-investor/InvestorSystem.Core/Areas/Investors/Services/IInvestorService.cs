@@ -10,17 +10,16 @@ namespace InvestorSystem.Core.Areas.Investors.Services
 {
     public interface IInvestorService
     {
-        public Task<InvestorDTO> DisplayInvestments();
-
-        //public Task<List<UserDisplayList>> GetInvestorList();
+        public InvestorDashboardDTO DisplayInvestments(long investorID);
+        public List<UserDisplayList> GetInvestorList(long investorID);
 
         public Task<InvestorDTO> AddInvestorBasicDetails(InvestorDTO investorDTO);
-        public Task<InvestorDTO> AddInvestorBankDetails(InvestorDTO investorDTO);
-        public Task<InvestorDTO> AddInvestorNomineeDetails(InvestorDTO investorDTO);
+        public Task<BankDetailsDTO> AddInvestorBankDetails(BankDetailsDTO bankDetailsDTO);
+        public Task<NomineeDTO> AddInvestorNomineeDetails(NomineeDTO nomineeDTO);
 
         public Task<InvestorDTO> UpdateInvestorBasicDetails(InvestorDTO investorDTO);
-        public Task<InvestorDTO> UpdateInvestorBankDetails(InvestorDTO investorDTO);
-        public Task<InvestorDTO> UpdateInvestorNomineeDetails(InvestorDTO investorDTO);
+        public Task<BankDetailsDTO> UpdateInvestorBankDetails(BankDetailsDTO bankDetailsDTO);
+        public Task<NomineeDTO> UpdateInvestorNomineeDetails(NomineeDTO nomineeDTO);
 
     }
 }

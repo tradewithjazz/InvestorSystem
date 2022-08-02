@@ -8,11 +8,11 @@ namespace InvestorSystem.Core.Areas.Common.DTOs
 {
     public class UserDisplayList
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public long InvestedAmount { get; set; }
+        public long InvestedPayoutAmount { get; set; }
         public long CalculatedCompoudingAmount { get; set; }
-}
+    }
 }
