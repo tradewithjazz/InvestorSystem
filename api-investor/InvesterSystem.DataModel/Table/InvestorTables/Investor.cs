@@ -33,6 +33,10 @@ namespace InvestorSystem.DataModel.Table
         public Investor_Payout_Intermediate? Investor_Payout_Intermediate { get; set; }
         public Investor_Payout_Investment? Investor_Payout_Investment { get; set; }
 
+        public int? BranchId { get; set; }
+        [ForeignKey("BranchId")]
+        public Branch? Branch { get; set; }
+
     }
 }
 

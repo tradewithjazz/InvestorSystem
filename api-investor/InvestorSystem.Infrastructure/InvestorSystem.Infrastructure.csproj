@@ -10,6 +10,7 @@
     <Folder Include="Areas\Admin\Services\" />
     <Folder Include="Areas\BranchManagers\Services\" />
     <Folder Include="Areas\BussinessPartners\Services\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
