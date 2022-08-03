@@ -32,6 +32,11 @@ namespace InvestorSystem.DataModel.Table
         public Employee_Payout_History? Employee_Payout_History { get; set; }
         public Employee_Payout_Intermediate? Employee_Payout_Intermediate { get; set; }
         public Employee_Payout_Investment? Employee_Payout_Investment { get; set; }
+
+        public int? BranchID { get; set; }
+        [ForeignKey("BranchID")]
+        public Branch? Branch { get; set; }
+
     }
 }
 

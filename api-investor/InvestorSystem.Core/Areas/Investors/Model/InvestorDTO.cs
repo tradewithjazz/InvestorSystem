@@ -1,4 +1,5 @@
-﻿using InvestorSystem.DataModel.Table;
+﻿using InvestorSystem.Core.Areas.Common.DTOs;
+using InvestorSystem.DataModel.Table;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,22 +19,6 @@ namespace InvestorSystem.Core.Areas.Investors.Model
         public long PersonID { get; set; }
         public long? BankDetailsID { get; set; }
         public long? NomineeID { get; set; } 
-    }
-
-    public class PersonDTO
-    {
-        public long ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string AddressLine1 { get; set; }
-        public string AddressLine2 { get; set; }
-        public DateTime DOB { get; set; }
-        public string Email { get; set; }
-        //public string District { get; set; }
-        public string MobileNo { get; set; }
-        public string AlternateMobile { get; set; }
-        public short MaritalStatusID { get; set; }
-        public short GenderID { get; set; }
     }
 
     public class BankDetailsDTO

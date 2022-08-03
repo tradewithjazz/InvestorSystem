@@ -38,11 +38,8 @@ namespace InvestorSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<short>("AccountTypeID")
+                    b.Property<short?>("AccountTypeID")
                         .HasColumnType("smallint");
-
-                    b.Property<int?>("AccounttypeID")
-                        .HasColumnType("integer");
 
                     b.Property<string>("BankName")
                         .IsRequired()
@@ -54,9 +51,40 @@ namespace InvestorSystem.Infrastructure.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AccounttypeID");
+                    b.HasIndex("AccountTypeID");
 
                     b.ToTable("BankDetails");
+                });
+
+            modelBuilder.Entity("InvestorSystem.DataModel.Table.Branch", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("AddressLine1")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("AddressLine2")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("BranchManagerID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BranchManagerID")
+                        .IsUnique();
+
+                    b.ToTable("Branch");
                 });
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.Employee", b =>
@@ -70,6 +98,9 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.Property<long>("BankDetailsID")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("BranchID")
+                        .HasColumnType("integer");
+
                     b.Property<long>("NomineeID")
                         .HasColumnType("bigint");
 
@@ -79,6 +110,8 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("BankDetailsID");
+
+                    b.HasIndex("BranchID");
 
                     b.HasIndex("NomineeID");
 
@@ -267,12 +300,12 @@ namespace InvestorSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.Gender", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<short>("ID")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(1)
-                        .HasColumnType("integer");
+                        .HasColumnType("smallint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<short>("ID"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -289,13 +322,13 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            ID = 1,
+                            ID = (short)1,
                             Description = "Male",
                             Name = "Male"
                         },
                         new
                         {
-                            ID = 2,
+                            ID = (short)2,
                             Description = "Female",
                             Name = "Female"
                         });
@@ -309,13 +342,13 @@ namespace InvestorSystem.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("ID"));
 
-                    b.Property<long>("BankDetailsID")
+                    b.Property<long?>("BankDetailsID")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("NomineeID")
+                    b.Property<long?>("NomineeID")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("PersonID")
+                    b.Property<long?>("PersonID")
                         .HasColumnType("bigint");
 
                     b.HasKey("ID");
@@ -340,10 +373,10 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
-                    b.Property<short>("CredOrDebID")
+                    b.Property<short?>("CredOrDebID")
                         .HasColumnType("smallint");
 
-                    b.Property<long>("InvestorID")
+                    b.Property<long?>("InvestorID")
                         .HasColumnType("bigint");
 
                     b.HasKey("ID");
@@ -369,7 +402,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.Property<DateTime>("AsOfDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("InvestorID")
+                    b.Property<long?>("InvestorID")
                         .HasColumnType("bigint");
 
                     b.HasKey("ID");
@@ -391,7 +424,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("InvestorID")
+                    b.Property<long?>("InvestorID")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("LastModified")
@@ -416,13 +449,13 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
-                    b.Property<short>("CredOrDebID")
+                    b.Property<short?>("CredOrDebID")
                         .HasColumnType("smallint");
 
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
-                    b.Property<long>("InvestorID")
+                    b.Property<long?>("InvestorID")
                         .HasColumnType("bigint");
 
                     b.HasKey("ID");
@@ -446,7 +479,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("InvestorID")
+                    b.Property<long?>("InvestorID")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("PaidOn")
@@ -474,7 +507,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.Property<DateTime>("ForDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("InvestorID")
+                    b.Property<long?>("InvestorID")
                         .HasColumnType("bigint");
 
                     b.HasKey("ID");
@@ -496,7 +529,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("InvestorID")
+                    b.Property<long?>("InvestorID")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("LastModified")
@@ -525,15 +558,37 @@ namespace InvestorSystem.Infrastructure.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("MaritalStatuse");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = (short)1,
+                            Name = "Single"
+                        },
+                        new
+                        {
+                            ID = (short)2,
+                            Name = "Married"
+                        },
+                        new
+                        {
+                            ID = (short)3,
+                            Name = "Divorced"
+                        },
+                        new
+                        {
+                            ID = (short)4,
+                            Name = "Widowed"
+                        });
                 });
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.MetaData.AccountType", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<short>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("smallint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<short>("ID"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -580,7 +635,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<short>("RelationshipID")
+                    b.Property<short?>("RelationshipID")
                         .HasColumnType("smallint");
 
                     b.HasKey("ID");
@@ -610,8 +665,8 @@ namespace InvestorSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly>("DOB")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -621,7 +676,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<short>("Gender")
+                    b.Property<short?>("GenderID")
                         .HasColumnType("smallint");
 
                     b.Property<string>("LastName")
@@ -636,6 +691,8 @@ namespace InvestorSystem.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("GenderID");
 
                     b.HasIndex("MaritalStatusID");
 
@@ -714,7 +771,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 7, 27, 14, 49, 4, 828, DateTimeKind.Utc).AddTicks(4138),
+                            CreatedDate = new DateTime(2022, 8, 2, 19, 28, 20, 993, DateTimeKind.Utc).AddTicks(1950),
                             DisplayName = "Invester System",
                             IsDeleted = false,
                             Password = "InvSys@123",
@@ -727,9 +784,20 @@ namespace InvestorSystem.Infrastructure.Migrations
                 {
                     b.HasOne("InvestorSystem.DataModel.Table.MetaData.AccountType", "Accounttype")
                         .WithMany()
-                        .HasForeignKey("AccounttypeID");
+                        .HasForeignKey("AccountTypeID");
 
                     b.Navigation("Accounttype");
+                });
+
+            modelBuilder.Entity("InvestorSystem.DataModel.Table.Branch", b =>
+                {
+                    b.HasOne("InvestorSystem.DataModel.Table.Employee", "Employee")
+                        .WithOne()
+                        .HasForeignKey("InvestorSystem.DataModel.Table.Branch", "BranchManagerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.Employee", b =>
@@ -739,6 +807,10 @@ namespace InvestorSystem.Infrastructure.Migrations
                         .HasForeignKey("BankDetailsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("InvestorSystem.DataModel.Table.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchID");
 
                     b.HasOne("InvestorSystem.DataModel.Table.MetaData.Nominee", "Nominee")
                         .WithMany()
@@ -753,6 +825,8 @@ namespace InvestorSystem.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("BankDetails");
+
+                    b.Navigation("Branch");
 
                     b.Navigation("Nominee");
 
@@ -856,21 +930,15 @@ namespace InvestorSystem.Infrastructure.Migrations
                 {
                     b.HasOne("InvestorSystem.DataModel.Table.BankDetails", "BankDetails")
                         .WithMany()
-                        .HasForeignKey("BankDetailsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BankDetailsID");
 
                     b.HasOne("InvestorSystem.DataModel.Table.MetaData.Nominee", "Nominee")
                         .WithMany()
-                        .HasForeignKey("NomineeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NomineeID");
 
                     b.HasOne("InvestorSystem.DataModel.Table.Person", "Person")
                         .WithMany()
-                        .HasForeignKey("PersonID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PersonID");
 
                     b.Navigation("BankDetails");
 
@@ -883,15 +951,11 @@ namespace InvestorSystem.Infrastructure.Migrations
                 {
                     b.HasOne("InvestorSystem.DataModel.Table.MetaData.CredOrDeb", "CredOrDeb")
                         .WithMany()
-                        .HasForeignKey("CredOrDebID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CredOrDebID");
 
                     b.HasOne("InvestorSystem.DataModel.Table.Investor", "Investor")
                         .WithMany("Investor_Comp_History")
-                        .HasForeignKey("InvestorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InvestorID");
 
                     b.Navigation("CredOrDeb");
 
@@ -902,9 +966,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                 {
                     b.HasOne("InvestorSystem.DataModel.Table.Investor", "Investor")
                         .WithOne("Investor_Comp_Intermediate")
-                        .HasForeignKey("InvestorSystem.DataModel.Table.Investor_Comp_Intermediate", "InvestorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InvestorSystem.DataModel.Table.Investor_Comp_Intermediate", "InvestorID");
 
                     b.Navigation("Investor");
                 });
@@ -913,9 +975,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                 {
                     b.HasOne("InvestorSystem.DataModel.Table.Investor", "Investor")
                         .WithOne("Investor_Comp_Investment")
-                        .HasForeignKey("InvestorSystem.DataModel.Table.Investor_Comp_Investment", "InvestorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InvestorSystem.DataModel.Table.Investor_Comp_Investment", "InvestorID");
 
                     b.Navigation("Investor");
                 });
@@ -924,15 +984,11 @@ namespace InvestorSystem.Infrastructure.Migrations
                 {
                     b.HasOne("InvestorSystem.DataModel.Table.MetaData.CredOrDeb", "CredOrDeb")
                         .WithMany()
-                        .HasForeignKey("CredOrDebID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CredOrDebID");
 
                     b.HasOne("InvestorSystem.DataModel.Table.Investor", "Investor")
                         .WithOne("Investor_Payment_History")
-                        .HasForeignKey("InvestorSystem.DataModel.Table.Investor_Payment_History", "InvestorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InvestorSystem.DataModel.Table.Investor_Payment_History", "InvestorID");
 
                     b.Navigation("CredOrDeb");
 
@@ -943,9 +999,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                 {
                     b.HasOne("InvestorSystem.DataModel.Table.Investor", "Investor")
                         .WithOne("Investor_Payout_History")
-                        .HasForeignKey("InvestorSystem.DataModel.Table.Investor_Payout_History", "InvestorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InvestorSystem.DataModel.Table.Investor_Payout_History", "InvestorID");
 
                     b.Navigation("Investor");
                 });
@@ -954,9 +1008,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                 {
                     b.HasOne("InvestorSystem.DataModel.Table.Investor", "Investor")
                         .WithOne("Investor_Payout_Intermediate")
-                        .HasForeignKey("InvestorSystem.DataModel.Table.Investor_Payout_Intermediate", "InvestorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InvestorSystem.DataModel.Table.Investor_Payout_Intermediate", "InvestorID");
 
                     b.Navigation("Investor");
                 });
@@ -965,9 +1017,7 @@ namespace InvestorSystem.Infrastructure.Migrations
                 {
                     b.HasOne("InvestorSystem.DataModel.Table.Investor", "Investor")
                         .WithOne("Investor_Payout_Investment")
-                        .HasForeignKey("InvestorSystem.DataModel.Table.Investor_Payout_Investment", "InvestorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InvestorSystem.DataModel.Table.Investor_Payout_Investment", "InvestorID");
 
                     b.Navigation("Investor");
                 });
@@ -976,18 +1026,22 @@ namespace InvestorSystem.Infrastructure.Migrations
                 {
                     b.HasOne("InvestorSystem.DataModel.Table.Relationship", "Relationship")
                         .WithMany()
-                        .HasForeignKey("RelationshipID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RelationshipID");
 
                     b.Navigation("Relationship");
                 });
 
             modelBuilder.Entity("InvestorSystem.DataModel.Table.Person", b =>
                 {
+                    b.HasOne("InvestorSystem.DataModel.Table.Gender", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderID");
+
                     b.HasOne("InvestorSystem.DataModel.Table.MaritalStatus", "MaritalStatus")
                         .WithMany()
                         .HasForeignKey("MaritalStatusID");
+
+                    b.Navigation("Gender");
 
                     b.Navigation("MaritalStatus");
                 });

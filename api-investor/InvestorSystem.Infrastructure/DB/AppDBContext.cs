@@ -81,6 +81,27 @@ namespace InvestorSystem.Infrastructure.DB
                 UserEmail = "investor@system.com",
                 UserName = "Invester System"
             });
+
+            modelBuilder.Entity<MaritalStatus>().HasData(new MaritalStatus
+            {
+                ID = 1,
+                Name = "Single"
+            },
+            new Gender
+            {
+                ID = 2,
+                Name = "Married"
+            },
+            new Gender
+            {
+                ID = 3,
+                Name = "Divorced"
+            },
+            new Gender
+            {
+                ID = 4,
+                Name = "Widowed"
+            });
         }
     }
 }
